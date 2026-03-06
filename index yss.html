@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Yayasan Syech Subakir • Sistem Kas Bulanan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f7ee 0%, #e2f0da 100%);
+            min-height: 100vh;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        @media (max-width: 480px) {
+            html {
+                font-size: 14px;
+            }
+        }
+
+        .screen-login {
+            display: flex;
+            min-height: 100vh;
+            background: white;
+            flex-direction: column;
+        }
+
+        @media (min-width: 769px) {
+            .screen-login {
+                flex-direction: row;
+            }
+        }
+
+        .login-left {
+            flex: 1;
+            background: linear-gradient(145deg, #0f5e2e, #2b8c4c);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 30vh;
+        }
+
+        @media (min-width: 769px) {
+            .login-left {
+                min-height: 100vh;
+            }
+        }
+
+        .animasi-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M20 20 L80 20 L80 80 L20 80 Z" fill="none" stroke="white" stroke-width="2"/><circle cx="30" cy="30" r="5" fill="white"/><circle cx="70" cy="70" r="5" fill="white"/><circle cx="50" cy="50" r="3" fill="white"/><path d="M20 50 Q50 30 80 50" stroke="white" fill="none" stroke-width="2"/></svg>');
+            background-size: 80px 80px;
+            animation: moveBg 20s linear infinite;
+        }
+
+        @media (max-width: 480px) {
+            .animasi-bg {
+                background-size: 60px 60px;
+            }
+        }
+
+        @keyframes moveBg {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .logo-besar {
+            font-size: 5rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: float 3s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @media (max-width: 480px) {
+            .logo-besar {
+                font-size: 4rem;
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .teks-animasi {
+            color: white;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .teks-animasi h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 480px) {
+            .teks-animasi h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .teks-animasi p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .login-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .login-box {
+            max-width: 400px;
+            width: 100%;
+            padding: 2rem;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 30px -15px #1b4f1b;
+            border: 3px solid #2e8b3c;
+        }
+
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 1.5rem;
+            }
+        }
+
+        .login-box h2 {
+            color: #1b5e20;
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .login-box p {
+            color: #2d6a4f;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #1b5e20;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 3px solid #2e8b3c;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .btn-login {
+            background: linear-gradient(145deg, #0f5e2e, #2b8c4c);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 50px;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #1a5723;
+            transition: 0.05s linear;
+            margin-top: 0.5rem;
+        }
+
+        .btn-login:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #1a5723;
+        }
+
+        .screen-dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-container {
+                padding: 0.8rem;
+            }
+        }
+
+        .dashboard-header {
+            background: white;
+            border-radius: 25px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 3px solid #2e8b3c;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex: 1;
+            min-width: 200px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #1b5e20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            border-color: #f9a826;
+        }
+
+        .user-avatar i {
+            font-size: 2rem;
+        }
+
+        .user-info {
+            overflow: hidden;
+        }
+
+        .user-info h3 {
+            font-size: 1.1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-info p {
+            font-size: 0.85rem;
+            color: #2d6a4f;
+            word-break: break-all;
+        }
+
+        .btn-logout {
+            background: #b71c1c;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 0 #8a1414;
+            flex-shrink: 0;
+        }
+
+        .modal-avatar {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-avatar.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 40px;
+            padding: 2rem;
+            border: 4px solid #2e8b3c;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h2 {
+            color: #1b5e20;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 480px) {
+            .avatar-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .avatar-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .avatar-option {
+            background: #e8f6e8;
+            border-radius: 20px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .avatar-option:hover {
+            border-color: #f9a826;
+            transform: scale(1.05);
+        }
+
+        .avatar-option.selected {
+            border-color: #1b5e20;
+            background: #c8e6c9;
+        }
+
+        .avatar-option i {
+            font-size: 3rem;
+            color: #1b5e20;
+        }
+
+        .avatar-option span {
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: #1b5e20;
+            font-size: 0.9rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn-save {
+            flex: 2;
+            background: #1b5e20;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            background: #b71c1c;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .kas-section {
+            background: white;
+            border-radius: 25px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 3px solid #2e8b3c;
+        }
+
+        .kas-title {
+            color: #1b5e20;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 480px) {
+            .kas-title {
+                font-size: 1.3rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        .tahun-navigasi {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #e8f6e8;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 2px solid #2e8b3c;
+        }
+
+        .tahun-navigasi button {
+            background: #1b5e20;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .tahun-navigasi button:hover {
+            background: #2e8b3c;
+            transform: scale(1.1);
+        }
+
+        .tahun-navigasi span {
+            font-weight: 600;
+            color: #1b5e20;
+            min-width: 100px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .tanggal-real-time {
+            background: #e8f6e8;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #1b5e20;
+            font-weight: 600;
+            border: 2px solid #2e8b3c;
+        }
+
+        .kas-table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 1rem -0.5rem 0;
+            padding: 0 0.5rem;
+        }
+
+        .kas-table {
+            min-width: 600px;
+        }
+
+        .tahun-header {
+            background: #1b5e20;
+            color: white;
+            padding: 0.8rem;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .bulan-row {
+            display: flex;
+            margin-bottom: 0.5rem;
+            border-bottom: 3px solid #1b5e20;
+            padding-bottom: 0.5rem;
+        }
+
+        .nama-col-header {
+            width: 130px;
+            font-weight: 700;
+            color: #1b5e20;
+            font-size: 0.9rem;
+            padding-left: 0.3rem;
+            flex-shrink: 0;
+        }
+
+        .bulan-col-headers {
+            display: flex;
+            flex: 1;
+            gap: 0.3rem;
+        }
+
+        .bulan-header-item {
+            flex: 1;
+            text-align: center;
+            font-weight: 700;
+            color: white;
+            background: #2e8b3c;
+            padding: 0.6rem 0.2rem;
+            border-radius: 20px 20px 0 0;
+            font-size: 0.9rem;
+            min-width: 60px;
+        }
+
+        .anggota-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #c8e6c9;
+            padding: 0.4rem 0;
+        }
+
+        .nama-col {
+            width: 130px;
+            font-weight: 600;
+            color: #1b5e20;
+            padding-left: 0.3rem;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            word-break: break-word;
+        }
+
+        .status-col {
+            display: flex;
+            flex: 1;
+            gap: 0.3rem;
+        }
+
+        .status-item {
+            flex: 1;
+            text-align: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0.3rem;
+            border-radius: 20px;
+            min-width: 60px;
+        }
+
+        .status-item:hover {
+            background: #e8f6e8;
+        }
+
+        .status-check.checked { color: #1b5e20; }
+        .status-check.unchecked { color: #b71c1c; }
+
+        .admin-badge {
+            background: #f9a826;
+            color: #1b5e20;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            display: inline-block;
+        }
+
+        .program-section {
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
+        .title {
+            color: #1b5e20;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(145deg, #0f5e2e, #2b8c4c);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .program {
+            background: #e7ebe7;
+            padding: 18px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            border: 1px solid #c8d9c8;
+        }
+
+        .program:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .program b {
+            font-size: 1.2rem;
+            color: #1b5e20;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .program p {
+            color: #2d6a4f;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .program img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 12px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .program img:first-of-type {
+            margin-top: 0;
+        }
+
+        .qris-section {
+            margin: 2rem auto;
+            max-width: 420px;
+        }
+
+        .qris-card {
+            background: white;
+            border-radius: 25px;
+            padding: 1.5rem;
+            border: 4px solid #f9a826;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,.2);
+        }
+
+        .qris-title {
+            color: #1b5e20;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .qris-img {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(145deg, #0f5e2e, #2b8c4c);
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border: 5px solid #f9a826;
+        }
+
+        @media (max-width: 480px) {
+            .qris-img {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        .qris-img i {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .qris-img span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: rgba(0,0,0,0.3);
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
+        }
+
+        .qris-note {
+            color: #2d6a4f;
+            font-size: 0.95rem;
+            margin: 1rem 0;
+        }
+
+        .qris-apps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .app-icon {
+            background: #e8f6e8;
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            color: #1b5e20;
+            border: 1px solid #2e8b3c;
+        }
+
+        .app-icon i {
+            font-size: 1.2rem;
+        }
+
+        .admin-card {
+            background: white;
+            border-radius: 25px;
+            padding: 1.2rem;
+            border: 3px solid #1b5e20;
+            max-width: 420px;
+            margin: 1.5rem auto;
+        }
+
+        .admin-title {
+            color: #1b5e20;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-input-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-input-group input {
+            flex: 2;
+            min-width: 150px;
+            padding: 0.8rem;
+            border: 2px solid #2e8b3c;
+            border-radius: 40px;
+            font-size: 0.95rem;
+        }
+
+        .admin-input-group button {
+            flex: 1;
+            min-width: 80px;
+            background: #1b5e20;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 0.8rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .admin-input-group button:hover {
+            background: #2e8b3c;
+        }
+
+        .bank-box {
+            background: white;
+            border-radius: 25px;
+            padding: 1.2rem;
+            border: 3px solid #2e8b3c;
+            max-width: 420px;
+            margin: 1.5rem auto;
+        }
+
+        .bank-title {
+            color: #1b5e20;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bank-list {
+            margin-top: 10px;
+        }
+
+        .bank-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f0f7ee;
+            border-radius: 50px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+        }
+
+        .bank-item span:first-child {
+            font-weight: 600;
+            color: #1b5e20;
+        }
+
+        .bank-item span:nth-child(2) {
+            font-family: monospace;
+            font-weight: 700;
+            color: #0f5e2e;
+        }
+
+        .btn-copy-small {
+            background: white;
+            border: 2px solid #2e8b3c;
+            border-radius: 40px;
+            padding: 5px 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-copy-small:hover {
+            background: #2e8b3c;
+            color: white;
+        }
+
+        .edit-rekening {
+            margin-top: 1rem;
+            display: none;
+            max-width: 420px;
+            margin: 1rem auto;
+        }
+
+        .edit-rekening.show {
+            display: block;
+        }
+
+        .edit-rekening input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #2e8b3c;
+            border-radius: 30px;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .edit-rekening button {
+            background: #1b5e20;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 30px;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .edit-rekening button:hover {
+            background: #2e8b3c;
+        }
+
+        .error-notification {
+            background: #ffebee;
+            color: #b71c1c;
+            border: 2px solid #b71c1c;
+            border-radius: 15px;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .error-notification.show {
+            display: block;
+        }
+
+        .success-notification {
+            background: #e8f5e9;
+            color: #1b5e20;
+            border: 2px solid #1b5e20;
+            border-radius: 15px;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .success-notification.show {
+            display: block;
+        }
+
+        .footer {
+            background: #b9c3b9;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-radius: 30px 30px 0 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="screenLogin" class="screen-login">
+        <div class="login-left">
+            <div class="animasi-bg"></div>
+            <div class="logo-besar">
+                <i class="fas fa-mosque"></i>
+            </div>
+            <div class="teks-animasi">
+                <h1>Yayasan Syech Subakir</h1>
+                <h2>Tasikharjo-Jenu-Tuban</h2>
+                <p style="font-size: 0.9rem; margin-top: 1.5rem;">
+                    <i class="fas fa-leaf"></i> Satu Hati Sejuta Peduli
+                </p>
+            </div>
+        </div>
+
+        <div class="login-right">
+            <div class="login-box">
+                <h2>Selamat Datang</h2>
+                <p>Silakan login dengan nomor WhatsApp</p>
+
+                <div id="waError" class="error-notification">
+                    <i class="fas fa-exclamation-circle"></i> 
+                </div>
+
+                <div id="waSuccess" class="success-notification">
+                    <i class="fas fa-check-circle"></i> 
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fab fa-whatsapp"></i> Nama Lengkap</label>
+                    <input type="text" id="loginName" placeholder="Masukkan nama Anda">
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fab fa-whatsapp"></i> Nomor WhatsApp</label>
+                    <input type="text" id="loginWA" placeholder="08xxxxxxxxxx">
+                </div>
+
+                <button class="btn-login" onclick="handleLogin()">
+                    <i class="fab fa-whatsapp"></i> Login / Daftar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screenDashboard" class="screen-dashboard">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <div class="user-welcome" onclick="bukaModalAvatar()">
+                    <div class="user-avatar" id="dashboardAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <h3 id="dashboardName">Nama Anggota</h3>
+                        <p id="dashboardWA">08xxxxxxxxxx</p>
+                        <span id="adminBadge" class="admin-badge" style="display: none;">Admin</span>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
+            <div class="kas-section">
+                <div class="kas-title">
+                    <i class="fas fa-hand-holding-usd"></i> Kas Bulanan
+                    <div id="tahunNavigasi" class="tahun-navigasi" style="display: none;">
+                        <button onclick="gantiTahun('prev')"><i class="fas fa-chevron-left"></i></button>
+                        <span id="tahunSekarang">2026</span>
+                        <button onclick="gantiTahun('next')"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <span class="tanggal-real-time" id="tanggalDisplay">
+                        <i class="fas fa-clock"></i> Memuat...
+                    </span>
+                </div>
+
+                <div class="kas-table-container">
+                    <div class="kas-table">
+                        <div class="tahun-header" id="tahunHeader">
+                            Tahun 2026
+                        </div>
+                        <div class="bulan-row">
+                            <div class="nama-col-header">Nama Anggota</div>
+                            <div class="bulan-col-headers" id="bulanHeaders"></div>
+                        </div>
+                        <div id="kasBody"></div>
+                    </div>
+                </div>
+            </div>
+
+            <section id="program">
+                <h2 class="title">Program & Kegiatan</h2>
+
+                <div class="grid">
+                    <div class="program">
+                        <b>Santunan Yatim</b>
+                        <p>Target: 30 Anak</p>
+                        <p>Dana: Rp 6.000.000</p>
+                        <img src="d:\a YAYASAN\DATA SANTUNAN\SANTUNAN .e\Santunan Feb 26.jpg" alt="Santunan Yatim">
+                    </div>
+
+                    <div class="program">
+                        <b>Bantuan Pendidikan</b>
+                        <p>Target: 20 Siswa</p>
+                        <p>Dana: Rp 5.000.000</p>
+                        <img src="d:\a YAYASAN\DATA SANTUNAN\SANTUNAN .e\YSS Bayar beasiswa TK.jpeg" alt="Bantuan Pendidikan">
+                    </div>
+
+                    <div class="program">
+                        <b>Bantuan Sosial</b>
+                        <p>Target: 60 KK</p>
+                        <p>Dana: Rp 9.000.000</p>
+                        <img src="d:\a YAYASAN\Photo YSS-OASYS.Dok\FAKIR MISKIN\DSC01522.JPG" alt="Bantuan Sosial">
+                    </div>
+                </div>
+            </section>
+
+            <div class="qris-section">
+                <div class="qris-card">
+                    <div class="qris-title">
+                        <i class="fas fa-qrcode" style="color: #f9a826;"></i>
+                        <span>QRIS Pembayaran</span>
+                    </div>
+                    
+                    <div class="qris-img">
+                        <i class="fas fa-qrcode"></i>
+                        <span>QRIS</span>
+                    </div>
+                    
+                    <p class="qris-note">
+                        Scan kode QRIS di atas menggunakan:
+                    </p>
+                    
+                    <div class="qris-apps">
+                        <div class="app-icon"><i class="fas fa-qrcode"></i> DANA</div>
+                        <div class="app-icon"><i class="fas fa-bolt"></i> OVO</div>
+                        <div class="app-icon"><i class="fas fa-motorcycle"></i> GoPay</div>
+                        <div class="app-icon"><i class="fas fa-link"></i> LinkAja</div>
+                        <div class="app-icon"><i class="fas fa-university"></i> M-Banking</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="admin-title">
+                    <i class="fas fa-user-shield"></i> Login Admin
+                </div>
+                <div class="admin-input-group">
+                    <input type="password" id="adminCode" placeholder="Kode admin">
+                    <button onclick="cekAdminCode()">Login</button>
+                </div>
+            </div>
+
+            <div class="bank-box">
+                <div class="bank-title">
+                    <i class="fas fa-university"></i> Nomor Rekening
+                </div>
+                <div class="bank-list">
+                    <div class="bank-item">
+                        <span>BNI</span>
+                        <span id="rekBSI">0684946935</span>
+                        <button class="btn-copy-small" onclick="copyText('rekBNI')">Salin</button>
+                    </div>
+            </div>
+
+            <div id="editRekAdmin" class="edit-rekening">
+                <p style="color: #1b5e20; margin-bottom: 0.5rem;">Edit Rekening (Admin):</p>
+                <input type="text" id="editBNI" value="0684946935" placeholder="BNI">
+                <button onclick="updateRekening()">Update Rekening</button>
+            </div>
+
+            <div class="footer">
+                <i class="fas fa-leaf"></i> Yayasan Syech Subakir – Tasikharjo
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAvatar" class="modal-avatar">
+        <div class="modal-content">
+            <h2><i class="fas fa-camera"></i> Pilih Foto Profile</h2>
+            
+            <div class="avatar-grid" id="avatarGrid">
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-save" onclick="simpanAvatar()">Simpan</button>
+                <button class="btn-cancel" onclick="tutupModalAvatar()">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        localStorage.clear();
+        
+        let currentUser = null;
+        let isAdmin = false;
+        const ADMIN_CODE = "T9#kP!3Z@Lx7^Wm2Q$A";
+        
+        const NOMOR_ADMIN = "6285232806202"; 
+        
+        const avatarList = [
+            { icon: 'fa-user', name: 'User Biasa' },
+            { icon: 'fa-user-tie', name: 'Pria (Berkopiah)' },
+            { icon: 'fa-user-graduate', name: 'Santri' },
+            { icon: 'fa-user-astronaut', name: 'Astronot' },
+            { icon: 'fa-user-ninja', name: 'Ninja' },
+            { icon: 'fa-user-secret', name: 'Agen Rahasia' },
+            { icon: 'fa-crown', name: 'Raja' },
+            { icon: 'fa-mosque', name: 'Masjid' },
+            { icon: 'fa-tree', name: 'Pohon' },
+            { icon: 'fa-hand-holding-heart', name: 'Donatur' }
+        ];
+        
+        let anggota = [];
+        let kas = [];
+        
+        let tahunSekarang = new Date().getFullYear();
+
+        const bulanSingkat = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+        function updateTanggalRealTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('tanggalDisplay').innerHTML = 
+                '<i class="fas fa-clock"></i> ' + now.toLocaleDateString('id-ID', options);
+        }
+        setInterval(updateTanggalRealTime, 1000);
+
+
+        function gantiTahun(arah) {
+            if (!isAdmin) {
+                alert('Hanya admin yang bisa mengganti tahun!');
+                return;
+            }
+            
+            if (arah === 'prev') {
+                tahunSekarang--;
+            } else {
+                tahunSekarang++;
+            }
+            renderKas();
+        }
+
+        function updateTampilanTahun() {
+            document.getElementById('tahunSekarang').textContent = tahunSekarang;
+            document.getElementById('tahunHeader').textContent = `Tahun ${tahunSekarang}`;
+        }
+
+        function isValidWA(wa) {
+            const cleanWA = wa.replace(/\D/g, '');
+            if (cleanWA.length < 10 || cleanWA.length > 13) return false;
+            if (!cleanWA.startsWith('08')) return false;
+            return true;
+        }
+
+        function formatWA(wa) {
+            return wa.replace(/\D/g, '');
+        }
+
+        function kirimNotifWA(nama, waUser, isNewMember) {
+            let waFormat = waUser.replace(/\D/g, '');
+            if (waFormat.startsWith('08')) {
+                waFormat = '62' + waFormat.substring(1);
+            }
+            
+            const pesan = isNewMember 
+                ? `🔔 *PENDAFTARAN ANGGOTA BARU*\n\nNama: ${nama}\nNomor WA: ${waUser}\n\nSelamat datang menjadi anggota Yayasan Syech Subakir! 🎉`
+                : `🔔 *LOGIN ANGGOTA*\n\nNama: ${nama}\nNomor WA: ${waUser}\n\nTelah login ke sistem kas.`;
+            
+            const waLink = `https://wa.me/${NOMOR_ADMIN}?text=${encodeURIComponent(pesan)}`;
+            window.open(waLink, '_blank');
+        }
+
+        function handleLogin() {
+            const name = document.getElementById('loginName').value.trim();
+            const wa = document.getElementById('loginWA').value.trim();
+            const errorDiv = document.getElementById('waError');
+            const successDiv = document.getElementById('waSuccess');
+            
+            errorDiv.classList.remove('show');
+            successDiv.classList.remove('show');
+            
+            if (!name) {
+                errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Nama harus diisi!';
+                errorDiv.classList.add('show');
+                return;
+            }
+            
+            if (!wa) {
+                errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Nomor WhatsApp harus diisi!';
+                errorDiv.classList.add('show');
+                return;
+            }
+            
+            if (!isValidWA(wa)) {
+                errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Nomor WhatsApp harus 10-13 digit dan diawali 08';
+                errorDiv.classList.add('show');
+                return;
+            }
+            
+            const cleanWA = formatWA(wa);
+            
+            let user = anggota.find(a => a.wa === cleanWA);
+            const isNewMember = !user;
+            
+            if (!user) {
+                user = {
+                    id: Date.now().toString(),
+                    name: name,
+                    wa: cleanWA,
+                    displayName: name,
+                    avatar: 'fa-user',
+                    joinDate: new Date().toISOString().split('T')[0]
+                };
+                anggota.push(user);
+                simpanData();
+                
+                successDiv.innerHTML = '<i class="fas fa-check-circle"></i> Pendaftaran berhasil! Selamat datang.';
+                successDiv.classList.add('show');
+                
+                setTimeout(() => {
+                    successDiv.classList.remove('show');
+                }, 3000);
+            }
+            
+            currentUser = user;
+            
+            kirimNotifWA(name, cleanWA, isNewMember);
+            
+            document.getElementById('dashboardName').textContent = user.displayName || user.name;
+            document.getElementById('dashboardWA').textContent = cleanWA;
+            updateAvatarDisplay(user.avatar || 'fa-user');
+            
+            document.getElementById('screenLogin').style.display = 'none';
+            document.getElementById('screenDashboard').style.display = 'block';
+            
+            initKasTahunan();
+            renderKas();
+            updateTanggalRealTime();
+            
+            renderAvatarGrid();
+        }
+
+        function logout() {
+            currentUser = null;
+            isAdmin = false;
+            document.getElementById('screenLogin').style.display = 'flex';
+            document.getElementById('screenDashboard').style.display = 'none';
+            document.getElementById('editRekAdmin').classList.remove('show');
+            document.getElementById('adminBadge').style.display = 'none';
+            document.getElementById('tahunNavigasi').style.display = 'none';
+            
+            document.getElementById('loginName').value = '';
+            document.getElementById('loginWA').value = '';
+            document.getElementById('waError').classList.remove('show');
+            document.getElementById('waSuccess').classList.remove('show');
+        }
+
+        function renderAvatarGrid() {
+            let html = '';
+            avatarList.forEach((avatar, index) => {
+                const selected = currentUser && currentUser.avatar === avatar.icon ? 'selected' : '';
+                html += `<div class="avatar-option ${selected}" onclick="pilihAvatar('${avatar.icon}', this)">
+                    <i class="fas ${avatar.icon}"></i>
+                    <span>${avatar.name}</span>
+                </div>`;
+            });
+            document.getElementById('avatarGrid').innerHTML = html;
+        }
+
+        let selectedAvatar = null;
+
+        function pilihAvatar(icon, element) {
+            document.querySelectorAll('.avatar-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            element.classList.add('selected');
+            selectedAvatar = icon;
+        }
+
+        function bukaModalAvatar() {
+            if (!currentUser) return;
+            renderAvatarGrid();
+            selectedAvatar = currentUser.avatar || 'fa-user';
+            document.getElementById('modalAvatar').classList.add('show');
+        }
+
+        function tutupModalAvatar() {
+            document.getElementById('modalAvatar').classList.remove('show');
+        }
+
+        function simpanAvatar() {
+            if (!currentUser || !selectedAvatar) return;
+            
+            currentUser.avatar = selectedAvatar;
+            const idx = anggota.findIndex(a => a.wa === currentUser.wa);
+            if (idx !== -1) {
+                anggota[idx].avatar = selectedAvatar;
+                simpanData();
+            }
+            
+            updateAvatarDisplay(selectedAvatar);
+            tutupModalAvatar();
+            
+            const successDiv = document.getElementById('waSuccess');
+            successDiv.innerHTML = '<i class="fas fa-check-circle"></i> Foto profile berhasil diperbarui!';
+            successDiv.classList.add('show');
+            setTimeout(() => {
+                successDiv.classList.remove('show');
+            }, 2000);
+        }
+
+        function updateAvatarDisplay(icon) {
+            const avatarEl = document.getElementById('dashboardAvatar');
+            avatarEl.innerHTML = `<i class="fas ${icon}"></i>`;
+        }
+
+        function initKasTahunan() {
+            const tahun = tahunSekarang;
+            
+            anggota.forEach(angg => {
+                for (let bulan = 0; bulan < 12; bulan++) {
+                    const exists = kas.find(k => k.wa === angg.wa && k.tahun === tahun && k.bulan === bulan);
+                    if (!exists) {
+                        kas.push({
+                            wa: angg.wa,
+                            nama: angg.displayName || angg.name,
+                            tahun: tahun,
+                            bulan: bulan,
+                            status: 'belum'
+                        });
+                    }
+                }
+            });
+            simpanData();
+        }
+
+        function ubahStatus(wa, bulan) {
+            if (!isAdmin) {
+                alert('Hanya admin yang bisa mengubah status kas!');
+                return;
+            }
+            
+            const idx = kas.findIndex(k => k.wa === wa && k.tahun === tahunSekarang && k.bulan === bulan);
+            if (idx !== -1) {
+                kas[idx].status = kas[idx].status === 'sudah' ? 'belum' : 'sudah';
+                simpanData();
+                renderKas();
+            }
+        }
+
+        function renderKas() {
+            initKasTahunan();
+            updateTampilanTahun();
+            
+            let headerHtml = '';
+            for (let i = 0; i < 12; i++) {
+                headerHtml += `<div class="bulan-header-item">${bulanSingkat[i]}</div>`;
+            }
+            document.getElementById('bulanHeaders').innerHTML = headerHtml;
+            
+            let bodyHtml = '';
+            anggota.forEach(angg => {
+                bodyHtml += `<div class="anggota-row">`;
+                bodyHtml += `<div class="nama-col">${angg.displayName || angg.name}</div>`;
+                bodyHtml += `<div class="status-col">`;
+                
+                for (let bulan = 0; bulan < 12; bulan++) {
+                    const dataKas = kas.find(k => k.wa === angg.wa && k.tahun === tahunSekarang && k.bulan === bulan);
+                    const status = dataKas ? dataKas.status : 'belum';
+                    const statusIcon = status === 'sudah' 
+                        ? '<i class="fas fa-check-circle status-check checked"></i>'
+                        : '<i class="fas fa-times-circle status-check unchecked"></i>';
+                    
+                    if (isAdmin) {
+                        bodyHtml += `<div class="status-item" onclick="ubahStatus('${angg.wa}', ${bulan})">${statusIcon}</div>`;
+                    } else {
+                        bodyHtml += `<div class="status-item">${statusIcon}</div>`;
+                    }
+                }
+                
+                bodyHtml += `</div>`;
+                bodyHtml += `</div>`;
+            });
+            
+            document.getElementById('kasBody').innerHTML = bodyHtml;
+        }
+
+        function cekAdminCode() {
+            const code = document.getElementById('adminCode').value;
+            if (code === ADMIN_CODE) {
+                isAdmin = true;
+                document.getElementById('editRekAdmin').classList.add('show');
+                document.getElementById('adminBadge').style.display = 'inline-block';
+                document.getElementById('tahunNavigasi').style.display = 'flex';
+                alert('Login admin berhasil!');
+                renderKas();
+            } else {
+                alert('Kode admin salah!');
+            }
+        }
+
+        function simpanData() {
+            localStorage.setItem('anggota', JSON.stringify(anggota));
+            localStorage.setItem('kas', JSON.stringify(kas));
+        }
+
+        function copyText(id) {
+            const text = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Nomor rekening disalin!');
+            });
+        }
+
+        function updateRekening() {
+            if (!isAdmin) {
+                alert('Hanya admin yang bisa mengubah rekening!');
+                return;
+            }
+            
+            const bsi = document.getElementById('editBSI').value;
+            
+            if (bsi) document.getElementById('rekBNI').textContent = bni;
+            
+            alert('Nomor rekening diperbarui!');
+        }
+
+        window.onload = function() {
+            document.getElementById('screenLogin').style.display = 'flex';
+            document.getElementById('screenDashboard').style.display = 'none';
+            updateTanggalRealTime();
+            
+            console.log('Data telah direset!');
+        };
+    </script>
+</body>
+</html>
